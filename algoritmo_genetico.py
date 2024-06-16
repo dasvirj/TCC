@@ -18,7 +18,7 @@ class Disciplina:
     def __repr__(self):
        return f' "{self.codigo}, {self.nome}", {self.semestre}, {self.requisito}'
     def lerGradeJson():
-        with open('matriz.json', 'r', encoding='utf8') as arquivo:
+        with open('tcc/matriz.json', 'r', encoding='utf8') as arquivo:
             teste = arquivo.read()
         disciplinas = json.loads(teste)
         grade=[]
@@ -192,28 +192,28 @@ class Disciplina:
         cont=0
         print("individuo", disciplinas)
         if(atual==0):
-            print(disciplinas)
             while disciplinas:
-                if(Disciplina.retornaPar(disciplinas[i].semestre) == 0 or Disciplina.retornaPar(disciplinas[i].semestre) == 2):
+                if(len(disciplinas)==0):
+                    break
+                if(Disciplina.retornaPar(disciplinas[i].semestre) == 2):
                     if(c_max_par + disciplinas[i].horas <=420):
                         if par:
-                            if(Disciplina.verificaPreRequisito(disciplinas[i], par)==True):
+                            for j in range(len(disciplinas[i].requisito)):
+                                for k in range(len(par)):
+                                    if(disciplinas[i].requisito[j]==par[k].codigo):
+                                        cont+=1
+                            if(cont!=0):
                                 final.append(par)
+                                semestres.append(2)
                                 par = [disciplinas[i]]
                                 c_max_par = disciplinas[i].horas
                                 del(disciplinas[i])
                                 i=0
-                        if(Disciplina.verificaPreRequisito(disciplinas[i], impar)==True):
-                            par.append(disciplinas[i])
-                            c_max_par+=disciplinas[i].horas
-                            del(disciplinas[i])
-                            i=0 
-                        if(len(disciplinas)==0):
-                            break
-                        if len(final)>0 and Disciplina.retornaPar(disciplinas[i].semestre) == 0 or Disciplina.retornaPar(disciplinas[i].semestre) == 2:
+                                cont=0
+                        if(len(final)>0):
                             for k in range(len(final)):
                                 if(Disciplina.verificaPreRequisito(disciplinas[i], final[k])==True):
-                                    cont+=1
+                                     cont+=1
                             if(len(final)==cont):
                                 print('verificando dentro da lista final se a disciplina existe')
                                 par.append(disciplinas[i])
@@ -221,19 +221,23 @@ class Disciplina:
                                 del(disciplinas[i])
                                 i=0
                             else:
-                                cont = 0
+                                final.append(par)
+                                semestres.append(2)
+                                par = [disciplinas[i]]
+                                c_max_par = disciplinas[i].horas
+                                del(disciplinas[i])
+                                i=0
+                                '''cont = 0
                                 print("nao pode adicionar par", i)
                                 aux = disciplinas[i]
                                 del(disciplinas[i])
                                 disciplinas.insert(len(disciplinas), aux)
                                 aux = 0
-                                i=0 
+                                i=0 '''
                         else:
-                            print("nao pode adicionar par", i)
-                            aux = disciplinas[i]
+                            par.append(disciplinas[i])
+                            c_max_par+=disciplinas[i].horas
                             del(disciplinas[i])
-                            disciplinas.insert(len(disciplinas), aux)
-                            aux = 0
                             i=0
                     else:
                         if par:
@@ -245,39 +249,49 @@ class Disciplina:
                             i=0
                 if(len(disciplinas)==0):
                     break
-                if (Disciplina.retornaPar(disciplinas[i].semestre) == 1 or Disciplina.retornaPar(disciplinas[i].semestre) == 0):
+                if(Disciplina.retornaPar(disciplinas[i].semestre) == 1):
                     if(c_max_impar + disciplinas[i].horas <=420):
                         if impar:
-                            if(Disciplina.verificaPreRequisito(disciplinas[i], impar)==True):
+                            for j in range(len(disciplinas[i].requisito)):
+                                for k in range(len(impar)):
+                                    if(disciplinas[i].requisito[j]==impar[k].codigo):
+                                        cont+=1
+                            if(cont!=0):
                                 final.append(impar)
+                                semestres.append(1)
                                 impar = [disciplinas[i]]
                                 c_max_impar = disciplinas[i].horas
                                 del(disciplinas[i])
                                 i=0
-                        if(Disciplina.verificaPreRequisito(disciplinas[i], par)==True):
+                                cont=0
+                        if(len(final)>0):
+                            for k in range(len(final)):
+                                if(Disciplina.verificaPreRequisito(disciplinas[i], final[k])==True):
+                                     cont+=1
+                            if(len(final)==cont):
+                                print('verificando dentro da lista final se a disciplina existe')
+                                impar.append(disciplinas[i])
+                                c_max_impar+=disciplinas[i].horas
+                                del(disciplinas[i])
+                                i=0
+                            else:
+                                final.append(impar)
+                                semestres.append(2)
+                                impar = [disciplinas[i]]
+                                c_max_impar = disciplinas[i].horas
+                                del(disciplinas[i])
+                                i=0
+                                '''cont = 0
+                                print("nao pode adicionar par", i)
+                                aux = disciplinas[i]
+                                del(disciplinas[i])
+                                disciplinas.insert(len(disciplinas), aux)
+                                aux = 0
+                                i=0 '''
+                        else:
                             impar.append(disciplinas[i])
                             c_max_impar+=disciplinas[i].horas
                             del(disciplinas[i])
-                            i=0
-                        if(len(disciplinas)==0):
-                            break
-                        if len(final)>0 and Disciplina.retornaPar(disciplinas[i].semestre) == 1 or Disciplina.retornaPar(disciplinas[i].semestre) == 0:
-                            for k in range(len(final)):
-                                if(Disciplina.verificaPreRequisito(disciplinas[i], final[k])==True):
-                                    cont+=1
-                            if(len(final)==cont):
-                                print('verificando dentro da lista final se a disciplina existe')
-                                par.append(disciplinas[i])
-                                c_max_par+=disciplinas[i].horas
-                                del(disciplinas[i])
-                                i=0
-                            cont = 0
-                        else:
-                            print("nao pode adicionar impar", i)
-                            aux = disciplinas[i]
-                            del(disciplinas[i])
-                            disciplinas.insert(len(disciplinas), aux)
-                            aux = 0
                             i=0
                     else:
                         if impar:
@@ -289,10 +303,25 @@ class Disciplina:
                             i=0
                 if(len(disciplinas)==0):
                     break
+                if(Disciplina.retornaPar(disciplinas[i].semestre)==0):
+                    if(c_max_par + disciplinas[i].horas <=420):
+                        par.append(disciplinas[i])
+                        c_max_par+=disciplinas[i].horas
+                        del(disciplinas[i])
+                        i=0
+                    if(len(disciplinas)==0):
+                        break
+                    if(c_max_impar + disciplinas[i].horas <=420):
+                        impar.append(disciplinas[i])
+                        c_max_impar+=disciplinas[i].horas
+                        del(disciplinas[i])
+                        i=0
             if par:
                 final.append(par)
+                semestres.append(2)
             if impar:
                 final.append(impar)
+                semestres.append(1)
         print("AAAAAAAAAAAAAAAAA", final)
         return final, semestres
     def retornaPar(x):
