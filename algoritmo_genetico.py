@@ -18,7 +18,7 @@ class Disciplina:
     def __repr__(self):
        return f' "{self.codigo}, {self.nome}", {self.semestre}, {self.requisito}'
     def lerGradeJson():
-        with open('tcc/matriz.json', 'r', encoding='utf8') as arquivo:
+        with open('matriz.json', 'r', encoding='utf8') as arquivo:
             teste = arquivo.read()
         disciplinas = json.loads(teste)
         grade=[]
