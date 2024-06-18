@@ -80,7 +80,7 @@ class Disciplina:
         for i in range(tam):
             individuo = Disciplina.criaIndividuo()
             populacao.append(individuo)
-            pesos.append(Disciplina.avaliaIndividuo(individuo))
+        pesos.append(Disciplina.avaliaIndividuo(individuo))
         return populacao, pesos
     def roleta(pop, pesos):
         roleta = []
@@ -97,7 +97,7 @@ class Disciplina:
     ############### funções auxiliares ###########
     def avaliaIndividuo(individuo):
         aux = []
-        peso=0
+        peso = 0
         lista = []
         cont = 0
         i = 0
@@ -142,19 +142,16 @@ class Disciplina:
         index = lista.index(menor_peso)
         return menor_peso, index
     def cruzaIndividuo(pai1, pai2):
-        c_n = 0
-        c_v = 0
+        valido1 = pai1
+        valido2 = pai2
         divisao = int(len(pai1)/2)
         filho1 = pai1[:divisao]+pai2[divisao:]
         filho2 = pai2[:divisao]+pai1[divisao:]
-        if(Disciplina.validaFilho(filho1, pai1) == True and Disciplina.validaFilho(filho2, pai1) == True):
-            c_n+=1
-            print("nao valido")
-            return filho1, filho2
-        else:
-            c_v+=1
-            print("valido")
-            return pai1, pai2
+        if(Disciplina.validaFilho(filho1, pai1) == True):
+            valido1=filho1
+        if(Disciplina.validaFilho(filho2, pai1) == True):
+            valido2=filho2
+        return valido1, valido2
     def ordenaPopulacao(populacao, pesos):
         menor = 0
         for i in range(len(pesos)-1):
@@ -181,7 +178,8 @@ class Disciplina:
             if(elemento == lista[i]):
                 cont+=1
         return cont
-    def agruparSemestre(disciplinas, atual):
+    def agruparSemestre(disciplina, atual):
+        disciplinas=disciplina
         final = []
         impar = []
         par = []
@@ -190,7 +188,6 @@ class Disciplina:
         semestres = []
         i=0
         cont=0
-        print("individuo", disciplinas)
         if(atual==0):
             while disciplinas:
                 if(len(disciplinas)==0):
@@ -322,7 +319,6 @@ class Disciplina:
             if impar:
                 final.append(impar)
                 semestres.append(1)
-        print("AAAAAAAAAAAAAAAAA", final)
         return final, semestres
     def retornaPar(x):
         if(x==0):
@@ -332,17 +328,24 @@ class Disciplina:
         else:
             return 1
 def main():
-    pop, peso = Disciplina.criaPopulacaoInicial(1)
+    pop, peso = Disciplina.criaPopulacaoInicial(5)
     nova_populacao = []
     t_pop = len(pop)*2
-    for i in range(1):
+    for i in range(2):
         while len(nova_populacao) < t_pop:
             pai = Disciplina.selecionaIndividuo(pop, peso)
             mae = Disciplina.selecionaIndividuo(pop, peso)
             filho1, filho2 = Disciplina.cruzaIndividuo(pai, mae)
+            print("pai e mae", filho1, filho2)
+            print()
             nova_populacao.append(filho1)
             nova_populacao.append(filho2)
+        print("Nova população antes de avaliação:", i , nova_populacao)
         peso = Disciplina.avaliaPopulacao(nova_populacao)
+        print("populacao apos avaliar")
+        print(nova_populacao)
+        print()
+        print("Pesos calculados:", peso)
         nova_populacao, peso = Disciplina.ordenaPopulacao(nova_populacao, peso)
         pop = nova_populacao[:len(pop)]
     menor, ind = Disciplina.menorElemento(peso)
