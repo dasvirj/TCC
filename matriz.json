@@ -256,7 +256,7 @@
     "horas": 60,
     "requisito": [0],
     "obrigatoria": 1,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -266,7 +266,7 @@
     "horas": 60,
     "requisito": [0],
     "obrigatoria": 1,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -276,7 +276,7 @@
     "horas": 60,
     "requisito": [25],
     "obrigatoria": 1,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -286,7 +286,7 @@
     "horas": 60,
     "requisito": [0],
     "obrigatoria": 1,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -336,7 +336,7 @@
     "horas": 60,
     "requisito": [0],
     "obrigatoria": 1,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -356,7 +356,7 @@
     "horas": 60,
     "requisito": [0],
     "obrigatoria": 1,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -366,7 +366,7 @@
     "horas": 60,
     "requisito": [0],
     "obrigatoria": 1,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -395,7 +395,7 @@
     "semestre": 7,
     "horas": 60,
     "requisito": [35, 33, 34, 37, 36],
-    "obrigatoria": 0,
+    "obrigatoria": 1,
     "pago": 0,
     "peso": 0
   },
