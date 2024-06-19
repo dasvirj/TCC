@@ -25,20 +25,30 @@ class Disciplina:
         for i in range(len(disciplinas)):
             grade.append(Disciplina(disciplinas[i]['codigo'], disciplinas[i]['nome'], disciplinas[i]['semestre'], disciplinas[i]['horas'], disciplinas[i]['requisito'], disciplinas[i]['obrigatoria'], disciplinas[i]['pago'], disciplinas[i]['peso'], 0))
         return grade
+    def __lt__(self, other):
+        # Define como comparar duas instâncias de Disciplina
+        # Aqui, por exemplo, pode-se comparar pela carga horária
+        return self.peso < other.peso
     def verificaPreRequisito(individuo, requisitos):
         #quero saber se cada elemento da minha lista de requisitos aparece no individuo, então verifico o código de cada uma das disciplinas do individuo
         # se for igual então adiciono 0, se não aparecer então adiciono 1
         #requisitos é uma lista
-        lista = []
-        if(len(requisitos)==1):
-            if(requisitos[0]==0):
-                lista.append(0)
+        resultado = []
         for i in range(len(individuo)):
-            if(individuo[i].codigo in requisitos):
-                lista.append(0)
-            else:
-                lista.append(1)
-        return sum(lista)
+            sublist = individuo[:(i+1)]
+            if(len(requisitos[i])!=0):
+                aux = requisitos[i]
+                if(set(aux).issubset(set(sublist))):
+                    resultado.append(0)
+                else:
+                    resultado.append(1)
+            elif(len(requisitos[i]) == 0):
+                if(requisitos[i]==0):
+                    resultado.append(0)
+                elif(requisitos[i] not in sublist):
+                    resultado.append(1)
+        
+        return sum(resultado)
         '''while True:
             if(elemento.requisito[0]==0):
                 return True
@@ -112,6 +122,7 @@ class Disciplina:
     ############### funções auxiliares ###########
     def avaliaIndividuo(disciplinas):
         peso=0
+        requisito = []
         # quantidade de semestres
         individuo = Disciplina.parimpar(disciplinas)
         qtd_semestre = Disciplina.qtdSemestres(individuo)
@@ -127,13 +138,9 @@ class Disciplina:
                 peso +=1
             elif qtd_disc_semestre[i] ==1:
                 peso+=2
-        print(disciplinas)
-        print(individuo)
-        print(peso)
         for i in range(len(disciplinas)):
-            d = disciplinas[:i+1]
-            peso += Disciplina.verificaPreRequisito(d, disciplinas[i].requisito)
-        
+            requisito.append(disciplinas[i].requisito)
+        peso += Disciplina.verificaPreRequisito(disciplinas, requisito)
         return peso
     def semestreAtual(individuo):
         inicio = 0
@@ -160,21 +167,12 @@ class Disciplina:
             linha = Disciplina.criaIndividuo()
             aux.append(linha.copy())
         return aux
-    def ordenaPopulacao(populacao, pesos):
-        menor = 0
-        for i in range(len(pesos)-1):
-            menor = i
-            for j in range(i+1, len(pesos)):
-                if(pesos[j] < pesos[menor]):
-                    menor = j
-            if(i != menor):
-                aux = pesos[i]
-                aux2 = populacao[i]
-                pesos[i] = pesos[menor]
-                populacao[i] = populacao[menor]
-                pesos[menor] = aux
-                populacao[menor] = aux2
-        return populacao, pesos
+    def ordenaPopulacao(pop, pesos):
+        populacao=pop
+        pares = sorted(zip(pesos, populacao))
+        _, popordenada = zip(*pares)
+        popordenada = list(popordenada)
+        return popordenada
     def encontraDuplicacao(elemento, lista):
         cont = 0
         for i in range(len(lista)):
@@ -202,19 +200,25 @@ class Disciplina:
                 cont=1
         soma.append(cont)
         return soma
-
-        
 def main():
-    geracoes = 10
+    geracoes = 100
     pop = Disciplina.criaPopulacaoInicial(100)
-    pesos=[]
+    pesos = []
     for i in range(geracoes):
         nova_populacao = Disciplina.cruzaIndividuo(pop)
         populacao = pop + nova_populacao
         for i in range(len(populacao)):
             individuo = populacao[i]
             pesos.append(Disciplina.avaliaIndividuo(individuo))
-            #print("lista: ",individuo, "peso:", Disciplina.avaliaIndividuo(individuo))
+        pop_ordenada = Disciplina.ordenaPopulacao(populacao, pesos)
+        metade =  abs(len(populacao)/2)
+        #nova_populacao = pop_ordenada[:metade]
+    '''for i in range(len(populacao)):
+        print(populacao[i])
+        print(pesos[i])'''
+    print(pop_ordenada[0])
+    print(pop_ordenada[1])
+    print(pop_ordenada[2])
 
 
 if __name__ == '__main__':

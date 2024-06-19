@@ -185,8 +185,8 @@ def verificar_restricoes(individuo, requisitos):
   subdisc = []
   tamsubreq = [len(item) if isinstance(item, list) else 0 for item in requisitos] # lista o tamanho da lista de requisitos de cada disciplina (disciplinas com um requisito recebe zero tbm)
   #print("tamsubreq ", tamsubreq)
-  print("TESTE REQUISITO", individuo, requisitos)
   for i in range(len(individuo)):
+    print("MORE", individuo, requisitos)
     subdisc = individuo[:(i+1)]
     print("subdisc", subdisc)
     #print("subdisc ", subdisc)
