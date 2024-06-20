@@ -128,10 +128,7 @@ def quantsemestres(listpi):
   lista = listpi
   cont_semestres = 1
   ultimo = lista[0]
-  print(lista)
-  print("ultimo", ultimo)
   for val in lista[1:]:
-    print("val", val)
     if (val!=ultimo):
       cont_semestres += 1
       ultimo = val
@@ -169,7 +166,6 @@ def individuopi(individuo):
 # pesos diferentes pas semestres com mais de 7 disciplinas ou menos de 3
 def somadiscsemestres(aux):
   pesossomadiscsem = 0
-  print("AUXILIAR", aux)
   for i in range(len(aux)):
     if (aux[i] > 7):
       pesossomadiscsem += 3 #(maxsemestres-4) # maxsemestres menos 2 anos
@@ -186,15 +182,12 @@ def verificar_restricoes(individuo, requisitos):
   tamsubreq = [len(item) if isinstance(item, list) else 0 for item in requisitos] # lista o tamanho da lista de requisitos de cada disciplina (disciplinas com um requisito recebe zero tbm)
   #print("tamsubreq ", tamsubreq)
   for i in range(len(individuo)):
-    print("MORE", individuo, requisitos)
     subdisc = individuo[:(i+1)]
-    print("subdisc", subdisc)
     #print("subdisc ", subdisc)
     if (tamsubreq[i] != 0):
       aux = requisitos[i]
       #print("aux ", aux)
       if (set(aux).issubset(set(subdisc))):
-        print("aaaaaaaaa", set(aux).issubset(set(subdisc)))
         resultado.append(0)
       else:
         resultado.append(1)
@@ -248,8 +241,8 @@ def verreqsem(individuo, indpi):
     else:
       requisitos.append([req[pos]])
   #
-  print(individuo)
-  print(requisitos)
+  #print("individuo", individuo)
+  #print("requisitos", requisitos)
   agrupados2 = []
   agrupados3 = []
   grupo_atual2 = []
@@ -257,7 +250,12 @@ def verreqsem(individuo, indpi):
   # Inicialização do grupo anterior com um valor que não aparece na lista
   grupo_anterior = None
   # Iterar sobre as listas e agrupar os elementos
+  print("AAAAAAAAAAAAAAAAAAAAAA", indpi, individuo, requisitos)
   for grupo, elemento2, elemento3 in zip(indpi, individuo, requisitos):
+    # grupo -> semestre inicial do individuo
+    # elemento2 -> codigo da disciplina
+    # elemento3 -> lista de requisitos
+    print(grupo, elemento2, elemento3)
     if grupo != grupo_anterior:
       if grupo_atual2 and grupo_atual3:  # Se os grupos atuais não estiverem vazios, adiciona à lista de grupos
         agrupados2.append(grupo_atual2)
@@ -277,6 +275,7 @@ def verreqsem(individuo, indpi):
     lista3 = agrupados3[i]
     soma = 0
     for elem in lista3:
+      print("elemento e lista2:", elem, lista3, lista2)
       if (elem != 0):
         if (elem in lista2):
           soma += 1
@@ -288,7 +287,6 @@ def verreqsem(individuo, indpi):
   print("resultados ", resultados)
   #print("requisitos ", requisitos)
   pesomesmo = sum(resultados)
-  print(pesomesmo)
   return pesomesmo
 
 
@@ -348,10 +346,12 @@ def ag(tampopulacao, geracoes):
       else:
         wsemindpi.append(len(mat))
 
-    # atribui pesos aos semestres com mais de 7 disciplinas e menos de 3 disciplinas por semestre
+    #atribui pesos aos semestres com mais de 7 disciplinas e menos de 3 disciplinas por semestre
     wsomadiscsemestres = []
     for i in range(len(populacao)):
       aux = listsomas[i]
+      print("semindpi", semindpi)
+      #semindpi é uma lista de par impar do primeiro elemento(semestre) de cada individuo da populacao
       if (semindpi[i] == semestreparimpar):
         wsomadiscsemestres.append(somadiscsemestres(aux))
       else:
@@ -442,3 +442,11 @@ for i in range(len(segundo)):
   #disc = terceiro[i]
   #pos = matreg.index(disc)
   #print("\n ", nomes[pos])
+
+  '''
+Lista de listas agrupadas 2: [[33, 37], [29, 27, 28, 26], [35, 36, 34], [40], [46]]
+Lista de listas agrupadas 3: [[0, 0], [0, 0, 0, 0], [26, 27, 28, 29, 0, 0], [35, 26, 27, 28, 29, 33, 34, 37, 36], [40, 35, 33, 34, 36, 37, 26, 27, 28, 29]]
+resultados  [0, 0, 0, 0, 0]
+
+(2, 2, 1, 1, 1, 1, 2, 2, 2, 1, 2)
+'''
