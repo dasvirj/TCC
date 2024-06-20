@@ -16,7 +16,7 @@ class Disciplina:
         self.obrigatoria = obrigatoria
         self.semestre_atual = semestre_atual
     def __repr__(self):
-       return f' {self.nome}'
+       return f'{self.codigo}'
     def lerGradeJson():
         with open('matriz.json', 'r', encoding='utf8') as arquivo:
             teste = arquivo.read()
@@ -201,8 +201,8 @@ class Disciplina:
         soma.append(cont)
         return soma
 def main():
-    geracoes = 100
-    pop = Disciplina.criaPopulacaoInicial(100)
+    geracoes = 10
+    pop = Disciplina.criaPopulacaoInicial(10)
     pesos = []
     for i in range(geracoes):
         nova_populacao = Disciplina.cruzaIndividuo(pop)
@@ -213,16 +213,21 @@ def main():
         pop_ordenada = Disciplina.ordenaPopulacao(populacao, pesos)
         metade =  abs(len(populacao)/2)
         #nova_populacao = pop_ordenada[:metade]
-    '''for i in range(len(populacao)):
+    for i in range(len(populacao)):
         print(populacao[i])
-        print(pesos[i])'''
-    print(pop_ordenada[0])
+        print(pesos[i])
+    '''print(pop_ordenada[0])
+    print(Disciplina.parimpar(pop_ordenada[0]))
     print(pop_ordenada[1])
+    print(Disciplina.parimpar(pop_ordenada[1]))
     print(pop_ordenada[2])
-
-
+    print(Disciplina.parimpar(pop_ordenada[2]))'''
 if __name__ == '__main__':
     main()
 '''d =  [[ "Programação Paralela", 6], [ "Optativa X", 7,  "Optativa VIII", 7,  "Optativa I", 5,  "Optativa III", 5,  "Redes de Computadores", 5,  "Optativa VI", 7,  "Métodos Formais", 5], [ "Sistemas Distribuídos", 6], [ "Sistemas Operacionais", 5,  "Inteligência Artificial", 5], [ "Arquitetura de Computadores", 4,  "Projeto de Graduação", 6], [ "Programação Paralela", 6,  "Computação Gráfica", 6], [ "Sistemas Operacionais", 5], [ "Teoria Geral de Administração e Empreendedorismo", 6], [ "Optativa VII", 7,  "Optativa X", 7,  "Métodos Formais", 5,  "Redes de Computadores", 5], [ "Projeto de Graduação", 6], [ "Projeto de Trabalho de Conclusão de Curso", 7], [ "Trabalho de Conclusão de Curso", 8]]
 lista = set(d)
 print(lista)'''
+
+
+#Agrupamento das disciplinas e verreqsem 
+

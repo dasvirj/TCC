@@ -348,10 +348,12 @@ def ag(tampopulacao, geracoes):
       else:
         wsemindpi.append(len(mat))
 
-    # atribui pesos aos semestres com mais de 7 disciplinas e menos de 3 disciplinas por semestre
+    #atribui pesos aos semestres com mais de 7 disciplinas e menos de 3 disciplinas por semestre
     wsomadiscsemestres = []
     for i in range(len(populacao)):
       aux = listsomas[i]
+      print("semindpi", semindpi)
+      #semindpi é uma lista de par impar do primeiro elemento(semestre) de cada individuo da populacao
       if (semindpi[i] == semestreparimpar):
         wsomadiscsemestres.append(somadiscsemestres(aux))
       else:
@@ -442,3 +444,11 @@ for i in range(len(segundo)):
   #disc = terceiro[i]
   #pos = matreg.index(disc)
   #print("\n ", nomes[pos])
+
+  '''
+Lista de listas agrupadas 2: [[33, 37], [29, 27, 28, 26], [35, 36, 34], [40], [46]]
+Lista de listas agrupadas 3: [[0, 0], [0, 0, 0, 0], [26, 27, 28, 29, 0, 0], [35, 26, 27, 28, 29, 33, 34, 37, 36], [40, 35, 33, 34, 36, 37, 26, 27, 28, 29]]
+resultados  [0, 0, 0, 0, 0]
+
+(2, 2, 1, 1, 1, 1, 2, 2, 2, 1, 2)
+'''
