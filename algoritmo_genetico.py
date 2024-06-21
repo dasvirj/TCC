@@ -49,7 +49,6 @@ class Disciplina:
                     resultado.append(0)
                 elif(requisitos[i] not in sublist):
                     resultado.append(1)
-        
         return sum(resultado)
         '''while True:
             if(elemento.requisito[0]==0):
@@ -69,7 +68,6 @@ class Disciplina:
         for i in range(len(individuo)):
             requisitos.append(individuo[i].requisito)
             codigos.append(individuo[i].codigo)
-        print(requisitos)
         agrupados2 = []
         agrupados3 = []
         semestre_atual2 = []
@@ -91,12 +89,14 @@ class Disciplina:
             agrupados2.append(semestre_atual2)
             agrupados3.append(semestre_atual3)
         resultado = []
+        print(individuo)
+        print(listaparimpar)
         for i in range(len(agrupados2)):
             lista2 = agrupados2[i]
             lista3 = agrupados3[i]
             soma = 0
             for elem in lista3:
-                print("elemento e lista", elem, lista3, lista2)
+                print("elemento:", elem, "lista 3", lista3, "lista 2:", lista2)
                 if (elem != 0):
                     if elem in lista2:
                         soma += 1
