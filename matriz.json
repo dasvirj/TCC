@@ -154,7 +154,7 @@
     "nome": "Estruturas Auto-ajustáveis e Grafos",
     "semestre": 3,
     "horas": 60,
-    "requisito": [9],
+    "requisito": [3, 9],
     "obrigatoria": 1,
     "pago": 1,
     "peso": 0
@@ -324,7 +324,7 @@
     "nome": "Computação Gráfica",
     "semestre": 6,
     "horas": 60,
-    "requisito": [13],
+    "requisito": [10, 13],
     "obrigatoria": 1,
     "pago": 0,
     "peso": 0
@@ -394,7 +394,7 @@
     "nome": "Projeto de Trabalho de Conclusão de Curso",
     "semestre": 7,
     "horas": 60,
-    "requisito": [35, 33, 34, 37, 36],
+    "requisito": [1, 6, 8, 11, 12, 9, 18, 17, 15, 16, 20, 23, 19, 22, 25, 21, 26, 27, 29, 28, 35, 33, 34, 37, 36],
     "obrigatoria": 1,
     "pago": 0,
     "peso": 0
@@ -454,7 +454,7 @@
     "nome": "Trabalho de Conclusão de Curso",
     "semestre": 8,
     "horas": 60,
-    "requisito": [40, 1, 2, 3, 4, 5, 6, 7,8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29],
+    "requisito": [40, 1, 2, 3, 4, 5, 6, 7,8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39],
     "obrigatoria": 1,
     "pago": 0,
     "peso": 0
