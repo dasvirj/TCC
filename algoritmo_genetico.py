@@ -1,15 +1,10 @@
 import numpy as np
 import random
 import json
-import math
-
-tam_populacao = 5
-geracoes = 10
-
-semestre_inicial = 2
+from app import app 
 #interface do usuário -> Listar todas as disciplinas e selecionar as que já pagou -> csv
 class Disciplina:
-    def __init__(self, codigo, nome, semestre, horas, requisito, obrigatoria, pago, peso, semestre_atual):
+    def __init__(self, codigo, nome, semestre, horas, requisito, obrigatoria, pago, peso):
         self.nome = nome
         self.codigo = codigo
         self.semestre = semestre
@@ -19,28 +14,48 @@ class Disciplina:
         self.pago = pago
         self.peso = peso
         self.obrigatoria = obrigatoria
-        self.semestre_atual = semestre_atual
     def __repr__(self):
-       return f'{self.nome}'
-    def lerGradeJson():
-        with open('matriz.json', 'r', encoding='utf8') as arquivo:
+        return json.dumps({
+            'codigo': self.codigo,
+            'nome': self.nome
+        })
+    def lerGradeJson(nome_arquivo):
+        with open(nome_arquivo, 'r', encoding='utf8') as arquivo:
             teste = arquivo.read()
         disciplinas = json.loads(teste)
         grade=[]
         for i in range(len(disciplinas)):
             grade.append(Disciplina(disciplinas[i]['codigo'], disciplinas[i]['nome'], disciplinas[i]['semestre'], disciplinas[i]['horas'], disciplinas[i]['requisito'], disciplinas[i]['obrigatoria'], disciplinas[i]['pago'], disciplinas[i]['peso'], 0))
         return grade
+    def lerJson(data):
+        disciplinas = []
+        # Iterar sobre as disciplinas na matriz
+        for disciplina_json in data['matriz']:
+        # Criar objeto Disciplina para cada disciplina
+            disciplina = Disciplina(
+                disciplina_json['codigo'],
+                disciplina_json['nome'],
+                disciplina_json['semestre'],
+                disciplina_json['horas'],
+                disciplina_json['requisito'],
+                disciplina_json['obrigatoria'],
+                disciplina_json['pago'],
+                disciplina_json['peso']
+            )
+            # Adicionar disciplina à lista
+            disciplinas.append(disciplina)
+        return disciplinas
     def __lt__(self, other):
         # Define como comparar duas instâncias de Disciplina
         # Aqui, por exemplo, pode-se comparar pela carga horária
         return self.peso < other.peso
-    def criaIndividuo():
-        todas = Disciplina.lerGradeJson()
+    def criaIndividuo(dados):
+        todas = Disciplina.lerJson(dados)
+        #todas = Disciplina.lerGradeJson(nome_arquivo)
         obrigatorias = []
-        optativas =[]
         for i in range(len(todas)):
-            if(todas[i].pago!=1 and todas[i].obrigatoria == 1): #-- pago == 0 são as disciplinas que precisam ser tratadas no algoritmo
-                obrigatorias.append(Disciplina(todas[i].codigo, todas[i].nome, todas[i].semestre, todas[i].horas, todas[i].requisito, todas[i].obrigatoria, todas[i].pago, todas[i].peso, todas[i].semestre_atual))
+            if(todas[i].pago!=1 and todas[i].obrigatoria == 1): 
+                obrigatorias.append(Disciplina(todas[i].codigo, todas[i].nome, todas[i].semestre, todas[i].horas, todas[i].requisito, todas[i].obrigatoria, todas[i].pago, todas[i].peso))
         for i in range(len(obrigatorias)):
             for j in range(len(obrigatorias[i].requisito)):
                 if(obrigatorias[i].requisito[j] != 0):
@@ -56,19 +71,19 @@ class Disciplina:
                 if(len(obrigatorias[i].requisito)==0):
                     obrigatorias[i].requisito.append(0)
         random.shuffle(obrigatorias)
-        return obrigatorias #Disciplina.ordenaGrade(obrigatorias)
-    def criaPopulacaoInicial(tam):
+        return obrigatorias
+    def criaPopulacaoInicial(dados, tam):
         # Recebe um tamanho tam e retorna um conjunto de individuos chamado populacao
         populacao = []
         for i in range(tam):
-            individuo = Disciplina.criaIndividuo()
+            individuo = Disciplina.criaIndividuo(dados)
             populacao.append(individuo)
         return populacao
-    def cruzaIndividuo(populacao):
-        aux = []        
+    def cruzaIndividuo(dados, populacao):
+        aux = []
         for _ in range(len(populacao)):
             linha = []
-            linha = Disciplina.criaIndividuo()
+            linha = Disciplina.criaIndividuo(dados)
             aux.append(linha.copy())
         return aux
     def parimpar(individuo):
@@ -114,8 +129,7 @@ class Disciplina:
         qtd_semestre = Disciplina.qtdSemestres(individuo)
         # quantidade de disciplinas por semestre
         qtd_disc_semestre = Disciplina.somaSemestre(individuo)
-        #print(individuo, "\n", qtd_disc_semestre, qtd_semestre)
-        # prerequisito no mesmo semestre        
+        # pre requisito no mesmo semestre
         for i in range(len(qtd_disc_semestre)):
             if qtd_disc_semestre[i] > 7:
                 peso +=5
@@ -131,27 +145,28 @@ class Disciplina:
         #requisitos é uma lista
         resultado = []
         subdisc = []
-        #print(requisitos)
-        tamsubreq = [len(item) if isinstance(item, list) else 0 for item in requisitos] # lista o tamanho da lista de requisitos de cada disciplina (disciplinas com um requisito recebe zero tbm)
-        #print("tamsubreq ", tamsubreq)
+        codigos=[]
         for i in range(len(individuo)):
-            subdisc = individuo[:(i+1)]
-            #print("subdisc ", subdisc)
+          codigos.append(individuo[i].codigo)
+        tamsubreq = [len(item) if isinstance(item, list) else 0 for item in requisitos] # lista o tamanho da lista de requisitos de cada disciplina (disciplinas com um requisito recebe zero tbm)
+        cont=0
+        for i in range(len(codigos)):
+            subdisc = codigos[:(i+1)]
             if (tamsubreq[i] != 0):
                 aux = requisitos[i]
-            #print("aux ", aux)
-                if (set(aux).issubset(set(subdisc))):
-                    resultado.append(0)
+                for j in range(len(aux)):
+                  for k in range(len(subdisc)):
+                    if(aux[j]==0):
+                      cont=1
+                    else:
+                      if(aux[j] == subdisc[k]):
+                        cont+=1
+                if(cont==len(aux)):
+                  resultado.append(0)
                 else:
-                    resultado.append(1)
-            elif (tamsubreq[i] == 0):
-                if (requisitos[i] == 0):
-                    resultado.append(0)
-                elif (requisitos[i] not in subdisc):
-                    resultado.append(1)
-        #auxsoma = sum(resultado)
-        print("Lista de individuos que violam os requisitos", resultado)
-        return sum(resultado)*5
+                  resultado.append(1)
+                cont=0
+        return sum(resultado)*2
     def requisitoSemestre(individuo, listaparimpar):
         requisitos=[]
         codigos=[]
@@ -189,24 +204,21 @@ class Disciplina:
                     else:
                         soma += 0
             resultado.append(soma)
-        #print("Resultados:", resultado)
         return sum(resultado)*2
     def retornaRequisitos(individuo):
         requisito = []
         for i in range(len(individuo)):
-            if(len(individuo[i].requisito)==1):
-                requisito.append(individuo[i].requisito)
             requisito.append(individuo[i].requisito)
         return requisito
-    def optativas():
-        todas = Disciplina.lerGradeJson()
+    def optativas(nome_arquivo):
+        todas = Disciplina.lerGradeJson(nome_arquivo)
         optativas =[]
         for i in range(len(todas)):
             if(todas[i].pago!=1 and todas[i].obrigatoria !=1):
-                optativas.append(Disciplina(todas[i].codigo, todas[i].nome, todas[i].semestre, todas[i].horas, todas[i].requisito, todas[i].obrigatoria, todas[i].pago, todas[i].peso, todas[i].semestre_atual))                    
+                optativas.append(Disciplina(todas[i].codigo, todas[i].nome, todas[i].semestre, todas[i].horas, todas[i].requisito, todas[i].obrigatoria, todas[i].pago, todas[i].peso))
         return optativas
     ############### funções auxiliares ###########
-    def avaliaPopulacao(populacao):
+    def avaliaPopulacao(populacao, semestre_inicial):
         peso_total = []
         peso_semestre_atual = []
         peso_pre_requisito = []
@@ -237,7 +249,7 @@ class Disciplina:
             if(peso_pre_requisito[i] != 0 and peso_semestre_atual[i] == 0):
                 normalizado[i]=2
             if(peso_pre_requisito[i] != 0 and peso_semestre_atual[i] != 0):
-                normalizado[i]=3           
+                normalizado[i]=3
         return peso_total, peso_pre_requisito, peso_semestre_atual, peso_semestre_par_impar, normalizado
     def ordenaPopulacao(pop, pesos, normalizado):
         ordenados = list(zip(normalizado, pesos, pop ))
@@ -245,44 +257,55 @@ class Disciplina:
         _,_, popordenada = zip(*dados_ordenados)
         popordenada = list(popordenada)
         return popordenada
-def main():
-    pop = Disciplina.criaPopulacaoInicial(tam_populacao)
+    def exibeGrupos(individuo, listaparimpar):
+        requisitos=[]
+        codigos=[]
+        for i in range(len(individuo)):
+            requisitos.append(individuo[i].requisito)
+            codigos.append(individuo[i].nome)
+        agrupados2 = []
+        agrupados3 = []
+        semestre_atual2 = []
+        semestre_atual3 = []
+        semestre_anterior = None
+        for semestre, codigo, requisito1 in (zip(listaparimpar, codigos, requisitos)):
+            if(semestre!=semestre_anterior):
+                if(semestre_atual2 and semestre_atual3):
+                    agrupados2.append(semestre_atual2)
+                    agrupados3.append(semestre_atual3)
+                semestre_atual2 = [codigo]
+                semestre_atual3 = requisito1.copy()
+                semestre_anterior=semestre
+            else:
+                semestre_atual2.append(codigo)
+                semestre_atual3.extend(requisito1)
+        if semestre_atual2 and semestre_atual3:
+            agrupados2.append(semestre_atual2)
+            agrupados3.append(semestre_atual3)
+        return agrupados2
+def ag(matriz, tam, geracoes, semestre_inicial):
+    pop = Disciplina.criaPopulacaoInicial(matriz, tam)
     pesos = []
     semestres = []
     for i in range(geracoes):
-        nova_populacao = Disciplina.cruzaIndividuo(pop)
+        nova_populacao = Disciplina.cruzaIndividuo(matriz, pop)
         populacao = pop + nova_populacao
-        peso_total, peso_pre_requisito, peso_semestre_atual, peso_semestre_par_impar, normalizado = Disciplina.avaliaPopulacao(populacao)
+        peso_total, peso_pre_requisito, peso_semestre_atual, peso_semestre_par_impar, normalizado = Disciplina.avaliaPopulacao(populacao, semestre_inicial)
         print("Peso_total: ", peso_total)
         print("Peso_pre_requisito: ", peso_pre_requisito)
         print("Peso_semestre_atual: ", peso_semestre_atual)
         print("Peso_semestre_par_impar: ", peso_semestre_par_impar)
-        pesos = [a + b + c for a, b, c in zip(peso_total, normalizado , peso_semestre_par_impar)]
-        #print(populacao)
-        #print("------------------metade------------")
+        pesos = [a + b for a, b in zip(peso_total, peso_semestre_par_impar)]
         pop_ordenada = Disciplina.ordenaPopulacao(populacao, pesos, normalizado)
-        print("Peso final:", pesos)
+
+        peso_total1, peso_pre_requisito1, peso_semestre_atual1, peso_semestre_par_impar1, normalizado1 = Disciplina.avaliaPopulacao(pop_ordenada, semestre_inicial)
+        pesos1 = [a + b for a, b in zip(peso_total1, peso_semestre_par_impar1)]
+        print("Peso final:", pesos1)
         print("\n")
         metade =  len(populacao)//2
-        nova_populacao = pop_ordenada[:metade]
-        #print(nova_populacao)
-        #print()
+        pop = pop_ordenada[:metade]
     print("--------------- Melhores resultados -------------")
-    print(Disciplina.parimpar(pop_ordenada[0]))
-    for i in range(len(populacao[0])):
-        print("\n", pop_ordenada[0][i])
-    print(Disciplina.parimpar(pop_ordenada[1]))
-    for i in range(len(populacao[1])):
-        print("\n", pop_ordenada[1][i])
-    print(Disciplina.parimpar(pop_ordenada[2]))
-    for i in range(len(populacao[2])):
-        print("\n", pop_ordenada[2][i])
-if __name__ == '__main__':
-    main()
-'''d =  [[ "Programação Paralela", 6], [ "Optativa X", 7,  "Optativa VIII", 7,  "Optativa I", 5,  "Optativa III", 5,  "Redes de Computadores", 5,  "Optativa VI", 7,  "Métodos Formais", 5], [ "Sistemas Distribuídos", 6], [ "Sistemas Operacionais", 5,  "Inteligência Artificial", 5], [ "Arquitetura de Computadores", 4,  "Projeto de Graduação", 6], [ "Programação Paralela", 6,  "Computação Gráfica", 6], [ "Sistemas Operacionais", 5], [ "Teoria Geral de Administração e Empreendedorismo", 6], [ "Optativa VII", 7,  "Optativa X", 7,  "Métodos Formais", 5,  "Redes de Computadores", 5], [ "Projeto de Graduação", 6], [ "Projeto de Trabalho de Conclusão de Curso", 7], [ "Trabalho de Conclusão de Curso", 8]]
-lista = set(d)
-print(lista)'''
-
-
-#Agrupamento das disciplinas e verreqsem 
-
+    return Disciplina.exibeGrupos(pop_ordenada[0], Disciplina.parimpar(pop_ordenada[0]))
+    ''' print(Disciplina.exibeGrupos(pop_ordenada[1], Disciplina.parimpar(pop_ordenada[1])))
+    print(Disciplina.exibeGrupos(pop_ordenada[2], Disciplina.parimpar(pop_ordenada[2])))
+    '''
