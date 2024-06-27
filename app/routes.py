@@ -11,6 +11,6 @@ def index():
 def processar():
     dados_recebidos = request.json
     #matriz, tamanho, geracoes, semestre_inicial
-    resultado = algoritmo_genetico.ag(dados_recebidos, 100, 2000, 2)
+    resultado = algoritmo_genetico.ag(dados_recebidos, 100, 5000, 2)
     return jsonify(resultado)
         

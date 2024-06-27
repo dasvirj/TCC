@@ -7,28 +7,42 @@
                     const obrigatorias = data.matriz.filter(disciplina => disciplina.obrigatoria == 1);
                     const semestre = {};
                     const form = document.getElementById('disciplinasForm');
-
+                    const parImpar = document.createElement('label')
+                    
                     obrigatorias.forEach(disciplina => {
                         if (!semestre[`semestre${disciplina.semestre}`]) {
                             semestre[`semestre${disciplina.semestre}`] = document.createElement('div');
+                            semestre[`semestre${disciplina.semestre}`].className = 'semestre';
                             semestre[`semestre${disciplina.semestre}`].id = `semestre${disciplina.semestre}`;
-                            semestre[`semestre${disciplina.semestre}`].innerHTML = `<h3>Semestre ${disciplina.semestre}</h3>`;
+                            semestre[`semestre${disciplina.semestre}`].innerHTML = `<h3>${disciplina.semestre}º Período </h3>`;
                             document.getElementById('disciplinasForm').appendChild(semestre[`semestre${disciplina.semestre}`]);
                         }
+                        const disc = document.createElement('label')
+                        disc.className = 'item-disciplina'
 
                         const checkbox = document.createElement('input');
                         checkbox.type = 'checkbox';
                         checkbox.name = 'disciplina';
+                        checkbox.className = 'checkbox'
                         checkbox.value = disciplina.codigo;
+
+                        const check = document.createElement('span')
+                        check.className = 'checkbox-span'
 
                         const link = document.createElement('a');
                         link.href = `#${disciplina.codigo}`;
                         link.textContent = `${disciplina.nome}`;
 
-                        form.appendChild(checkbox);
-                        form.appendChild(link);
-                        form.appendChild(document.createElement('br'));
+                        disc.appendChild(checkbox)
+                        disc.appendChild(check)
+                        disc.appendChild(link)
+                        semestre[`semestre${disciplina.semestre}`].appendChild(disc);
                     });
+
+                    const btn = document.createElement('button');
+                    btn.type = 'submit';
+                    btn.textContent = 'Gerar sugestão';
+                    form.appendChild(btn); 
 
                     form.addEventListener('submit', function(event) {
                         event.preventDefault();
@@ -40,10 +54,8 @@
                                 disciplina.pago = 0;
                             }
                         });
-
                         const updateJson = { matriz: obrigatorias };
                         console.log(JSON.stringify(updateJson, null, 2)); // Log para verificar updateJson
-
                         fetch('/processar', {
                             method: 'POST',
                             headers: {
