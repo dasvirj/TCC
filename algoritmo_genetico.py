@@ -132,13 +132,19 @@ class Disciplina:
         # pre requisito no mesmo semestre
         for i in range(len(qtd_disc_semestre)):
             if qtd_disc_semestre[i] > 7:
-                peso +=5
+                peso += 8
+            elif qtd_disc_semestre[i] == 5:
+                peso += 0
+            elif qtd_disc_semestre[i] == 4:
+                peso += 3
+            elif qtd_disc_semestre[i] == 3:
+                peso += 4
             elif qtd_disc_semestre[i] == 2:
-                peso +=3
+                peso += 5
             elif qtd_disc_semestre[i] == 1:
-                peso+=4
+                peso += 6
         peso += qtd_semestre
-        return peso
+        return peso * 2
     def verificaPreRequisito(individuo, requisitos):
         #quero saber se cada elemento da minha lista de requisitos aparece no individuo, então verifico o código de cada uma das disciplinas do individuo
         # se for igual então adiciono 0, se não aparecer então adiciono 1
@@ -245,11 +251,11 @@ class Disciplina:
             if(peso_pre_requisito[i] == 0 and peso_semestre_atual[i] == 0):
                 normalizado[i]=0
             if(peso_pre_requisito[i] == 0 and peso_semestre_atual[i] != 0):
-                normalizado[i]=1
+                normalizado[i]=4
             if(peso_pre_requisito[i] != 0 and peso_semestre_atual[i] == 0):
-                normalizado[i]=2
+                normalizado[i]=4
             if(peso_pre_requisito[i] != 0 and peso_semestre_atual[i] != 0):
-                normalizado[i]=3
+                normalizado[i]=4
         return peso_total, peso_pre_requisito, peso_semestre_atual, peso_semestre_par_impar, normalizado
     def ordenaPopulacao(pop, pesos, normalizado):
         ordenados = list(zip(normalizado, pesos, pop ))
@@ -305,7 +311,9 @@ def ag(matriz, tam, geracoes, semestre_inicial):
         metade =  len(populacao)//2
         pop = pop_ordenada[:metade]
     print("--------------- Melhores resultados -------------")
-    return Disciplina.exibeGrupos(pop_ordenada[0], Disciplina.parimpar(pop_ordenada[0]))
-    ''' print(Disciplina.exibeGrupos(pop_ordenada[1], Disciplina.parimpar(pop_ordenada[1])))
+    print(Disciplina.exibeGrupos(pop_ordenada[1], Disciplina.parimpar(pop_ordenada[1])))
     print(Disciplina.exibeGrupos(pop_ordenada[2], Disciplina.parimpar(pop_ordenada[2])))
-    '''
+    print(Disciplina.exibeGrupos(pop_ordenada[2], Disciplina.parimpar(pop_ordenada[3])))
+    print(Disciplina.exibeGrupos(pop_ordenada[2], Disciplina.parimpar(pop_ordenada[4])))
+    return Disciplina.exibeGrupos(pop_ordenada[0], Disciplina.parimpar(pop_ordenada[0]))
+    
