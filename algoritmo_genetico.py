@@ -15,10 +15,7 @@ class Disciplina:
         self.peso = peso
         self.obrigatoria = obrigatoria
     def __repr__(self):
-        return json.dumps({
-            'codigo': self.codigo,
-            'nome': self.nome
-        })
+       return f'[{self.codigo}]'
     def lerGradeJson(nome_arquivo):
         with open(nome_arquivo, 'r', encoding='utf8') as arquivo:
             teste = arquivo.read()
@@ -54,7 +51,7 @@ class Disciplina:
         #todas = Disciplina.lerGradeJson(nome_arquivo)
         obrigatorias = []
         for i in range(len(todas)):
-            if(todas[i].pago!=1 and todas[i].obrigatoria == 1): 
+            if(todas[i].pago!=1): 
                 obrigatorias.append(Disciplina(todas[i].codigo, todas[i].nome, todas[i].semestre, todas[i].horas, todas[i].requisito, todas[i].obrigatoria, todas[i].pago, todas[i].peso))
         for i in range(len(obrigatorias)):
             for j in range(len(obrigatorias[i].requisito)):
@@ -132,19 +129,15 @@ class Disciplina:
         # pre requisito no mesmo semestre
         for i in range(len(qtd_disc_semestre)):
             if qtd_disc_semestre[i] > 7:
-                peso += 8
-            elif qtd_disc_semestre[i] == 5:
-                peso += 0
-            elif qtd_disc_semestre[i] == 4:
-                peso += 3
+                peso += 10
             elif qtd_disc_semestre[i] == 3:
-                peso += 4
+                peso += 1
             elif qtd_disc_semestre[i] == 2:
-                peso += 5
+                peso += 3
             elif qtd_disc_semestre[i] == 1:
-                peso += 6
-        peso += qtd_semestre
-        return peso * 2
+                peso += 5
+        #peso += qtd_semestre 
+        return peso, qtd_semestre
     def verificaPreRequisito(individuo, requisitos):
         #quero saber se cada elemento da minha lista de requisitos aparece no individuo, então verifico o código de cada uma das disciplinas do individuo
         # se for igual então adiciono 0, se não aparecer então adiciono 1
@@ -172,19 +165,22 @@ class Disciplina:
                 else:
                   resultado.append(1)
                 cont=0
-        return sum(resultado)*2
+        return sum(resultado)
+### pre requisitos semestre - refazer
     def requisitoSemestre(individuo, listaparimpar):
+        soma =0
         requisitos=[]
         codigos=[]
         for i in range(len(individuo)):
             requisitos.append(individuo[i].requisito)
             codigos.append(individuo[i].codigo)
+        #print("Requisitos: ", requisitos)
         agrupados2 = []
         agrupados3 = []
         semestre_atual2 = []
         semestre_atual3 = []
         semestre_anterior = None
-        for semestre, codigo, requisito1 in (zip(listaparimpar, codigos, requisitos)):
+        for semestre, codigo, requisito1 in zip(listaparimpar, codigos, requisitos):
             if(semestre!=semestre_anterior):
                 if(semestre_atual2 and semestre_atual3):
                     agrupados2.append(semestre_atual2)
@@ -200,17 +196,19 @@ class Disciplina:
             agrupados3.append(semestre_atual3)
         resultado = []
         for i in range(len(agrupados2)):
+            #print("interacao de ", i, "\n")
             lista2 = agrupados2[i]
             lista3 = agrupados3[i]
-            soma = 0
+            soma=0
             for elem in lista3:
                 if (elem != 0):
-                    if elem in lista2:
+                    if (elem in lista2):
                         soma += 1
                     else:
                         soma += 0
             resultado.append(soma)
-        return sum(resultado)*2
+        #print("resultado:", resultado)
+        return sum(resultado)
     def retornaRequisitos(individuo):
         requisito = []
         for i in range(len(individuo)):
@@ -233,34 +231,44 @@ class Disciplina:
         par_impar = []
         requisito = []
         normalizado = []
+        semestre = []
         for i in range(len(populacao)):
-            peso_total.append(Disciplina.avaliaIndividuo(populacao[i]))
-            requisito = Disciplina.retornaRequisitos(populacao[i])
+            p, s = Disciplina.avaliaIndividuo(populacao[i])
+            peso_total.append(p)
+            semestre.append(s)
+            requisito.append(Disciplina.retornaRequisitos(populacao[i]))
             semestres_par_impar.append(Disciplina.semestreAtual(populacao[i]))
             par_impar.append(Disciplina.parimpar(populacao[i]))
             if semestres_par_impar[i] == semestre_inicial:
                 peso_semestre_par_impar.append(0)
-                peso_pre_requisito.append(Disciplina.verificaPreRequisito(populacao[i], requisito))
-                peso_semestre_atual.append(Disciplina.requisitoSemestre(populacao[i], par_impar))
+                peso_pre_requisito.append(Disciplina.verificaPreRequisito(populacao[i], requisito[i]))
+                peso_semestre_atual.append(Disciplina.requisitoSemestre(populacao[i], par_impar[i]))
             else:
                 peso_semestre_par_impar.append(len(populacao[i]))
                 peso_pre_requisito.append(len(populacao[i]))
                 peso_semestre_atual.append(len(populacao[i]))
         normalizado = np.full(len(populacao), -1)
+        qtd_semestre = []
+        '''qtd_soma_disc =[]
+        qtd_semestre_igual = []
+        qtd_semestre_diferente = []
+        
+        for i in range(len(populacao)):
+            qtd_semestre.append()    '''
         for i in range(len(populacao)):
             if(peso_pre_requisito[i] == 0 and peso_semestre_atual[i] == 0):
                 normalizado[i]=0
             if(peso_pre_requisito[i] == 0 and peso_semestre_atual[i] != 0):
-                normalizado[i]=4
+                normalizado[i]=1
             if(peso_pre_requisito[i] != 0 and peso_semestre_atual[i] == 0):
-                normalizado[i]=4
+                normalizado[i]=2
             if(peso_pre_requisito[i] != 0 and peso_semestre_atual[i] != 0):
-                normalizado[i]=4
-        return peso_total, peso_pre_requisito, peso_semestre_atual, peso_semestre_par_impar, normalizado
-    def ordenaPopulacao(pop, pesos, normalizado):
-        ordenados = list(zip(normalizado, pesos, pop ))
-        dados_ordenados = sorted(ordenados, key=lambda x: (x[0], x[1]))
-        _,_, popordenada = zip(*dados_ordenados)
+                normalizado[i]=3
+        return peso_total, peso_pre_requisito, peso_semestre_atual, peso_semestre_par_impar, normalizado, semestre
+    def ordenaPopulacao(pop, pesos, qtd_semestre, normalizado):
+        ordenados = list(zip(normalizado, qtd_semestre, pesos, pop))
+        dados_ordenados = sorted(ordenados, key=lambda x: (x[0], x[1], x[2]))
+        _,_,_,popordenada = zip(*dados_ordenados)
         popordenada = list(popordenada)
         return popordenada
     def exibeGrupos(individuo, listaparimpar):
@@ -292,28 +300,52 @@ class Disciplina:
 def ag(matriz, tam, geracoes, semestre_inicial):
     pop = Disciplina.criaPopulacaoInicial(matriz, tam)
     pesos = []
+    c=0
     semestres = []
     for i in range(geracoes):
         nova_populacao = Disciplina.cruzaIndividuo(matriz, pop)
         populacao = pop + nova_populacao
-        peso_total, peso_pre_requisito, peso_semestre_atual, peso_semestre_par_impar, normalizado = Disciplina.avaliaPopulacao(populacao, semestre_inicial)
-        print("Peso_total: ", peso_total)
-        print("Peso_pre_requisito: ", peso_pre_requisito)
-        print("Peso_semestre_atual: ", peso_semestre_atual)
-        print("Peso_semestre_par_impar: ", peso_semestre_par_impar)
-        pesos = [a + b for a, b in zip(peso_total, peso_semestre_par_impar)]
-        pop_ordenada = Disciplina.ordenaPopulacao(populacao, pesos, normalizado)
-
-        peso_total1, peso_pre_requisito1, peso_semestre_atual1, peso_semestre_par_impar1, normalizado1 = Disciplina.avaliaPopulacao(pop_ordenada, semestre_inicial)
-        pesos1 = [a + b for a, b in zip(peso_total1, peso_semestre_par_impar1)]
-        print("Peso final:", pesos1)
+        peso_total, peso_pre_requisito, peso_semestre_atual, peso_semestre_par_impar, normalizado, qtd_semestre = Disciplina.avaliaPopulacao(populacao, semestre_inicial)
+        pesos = [a + b + c for a, b, c in zip(peso_total, peso_semestre_par_impar, qtd_semestre)]
+        print("Qtd_semestre", qtd_semestre)
+        print("Normalizado: ", normalizado)
+        print("pre requisito semestre: ", peso_semestre_atual)
+        print("pre requsito: ", peso_pre_requisito)
+        print("Peso final ordenado:", pesos)
         print("\n")
+        pop_ordenada = Disciplina.ordenaPopulacao(populacao, qtd_semestre, pesos, normalizado)
         metade =  len(populacao)//2
         pop = pop_ordenada[:metade]
+        peso_total1, peso_pre_requisito1, peso_semestre_atual1, peso_semestre_par_impar1, normalizado1, qtd_semestre1 = Disciplina.avaliaPopulacao(pop, semestre_inicial)
+        pesos1 = [a + b + c for a, b, c in zip(peso_total1, peso_semestre_par_impar1, qtd_semestre)]
+        print("Qtd_semestre2", qtd_semestre1)
+        print("Normalizado2: ", normalizado1)
+        print("pre requisito semestre2: ", peso_semestre_atual1)
+        print("pre requsito2: ", peso_pre_requisito1)
+        print("Peso final ordenado2:", pesos1)
+        print("\n")
+        c+=1
+    print(c)
+    print("Melhor resultado:", pop[0])
     print("--------------- Melhores resultados -------------")
-    print(Disciplina.exibeGrupos(pop_ordenada[1], Disciplina.parimpar(pop_ordenada[1])))
-    print(Disciplina.exibeGrupos(pop_ordenada[2], Disciplina.parimpar(pop_ordenada[2])))
-    print(Disciplina.exibeGrupos(pop_ordenada[2], Disciplina.parimpar(pop_ordenada[3])))
-    print(Disciplina.exibeGrupos(pop_ordenada[2], Disciplina.parimpar(pop_ordenada[4])))
-    return Disciplina.exibeGrupos(pop_ordenada[0], Disciplina.parimpar(pop_ordenada[0]))
+    '''print(pop[0])
+    requisitosemestre = Disciplina.requisitoSemestre(pop[i], Disciplina.parimpar(pop[0]))
+    print("REQUISITOS NO SEMESTRE", requisitosemestre)
+    print(Disciplina.parimpar(pop[0]))
+    print(pop[0])'''
+    '''print(Disciplina.exibeGrupos(pop[1], Disciplina.parimpar(pop[1])))
+    print(Disciplina.exibeGrupos(pop[2], Disciplina.parimpar(pop[2])))'''
+    '''print(Disciplina.exibeGrupos(pop[3], Disciplina.parimpar(pop[3])))
+    print(Disciplina.exibeGrupos(pop[4], Disciplina.parimpar(pop[4])))
+    print(Disciplina.exibeGrupos(pop[5], Disciplina.parimpar(pop[5])))
+    print(Disciplina.exibeGrupos(pop[6], Disciplina.parimpar(pop[6])))
+    print(Disciplina.exibeGrupos(pop[7], Disciplina.parimpar(pop[7])))
+    print(Disciplina.exibeGrupos(pop[8], Disciplina.parimpar(pop[8])))
+    print(Disciplina.exibeGrupos(pop[9], Disciplina.parimpar(pop[9])))
+    print(Disciplina.exibeGrupos(pop[10], Disciplina.parimpar(pop[10])))'''
+    resultados = []
+    for i in range(10):
+        print(i, "-", Disciplina.exibeGrupos(pop[i], Disciplina.parimpar(pop[i])), "\n")
+    return Disciplina.exibeGrupos(pop[0], Disciplina.parimpar(pop[0]))
     
+# maior valor / menor valor

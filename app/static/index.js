@@ -65,8 +65,7 @@
                         })
                         .then(response => response.json())
                         .then(data => {
-                            const t = 1
-                            console.log('Resposta do servidor:', data); // Log para verificar a resposta do servidor
+                            console.log('Resposta do servidorr:', data); // Log para verificar a resposta do servidor
 
                             // Exibir os dados da resposta no HTML
                             const respostaServidor = document.getElementById('respostaServidor');
