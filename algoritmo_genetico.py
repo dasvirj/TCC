@@ -2,6 +2,7 @@ import numpy as np
 import random
 import json
 from app import app 
+import matplotlib.pyplot as plt
 #interface do usuário -> Listar todas as disciplinas e selecionar as que já pagou -> csv
 class Disciplina:
     def __init__(self, codigo, nome, semestre, horas, requisito, obrigatoria, pago, peso):
@@ -126,17 +127,16 @@ class Disciplina:
         qtd_semestre = Disciplina.qtdSemestres(individuo)
         # quantidade de disciplinas por semestre
         qtd_disc_semestre = Disciplina.somaSemestre(individuo)
-        # pre requisito no mesmo semestre
         for i in range(len(qtd_disc_semestre)):
             if qtd_disc_semestre[i] > 7:
-                peso += 10
+                peso += len(individuo)
             elif qtd_disc_semestre[i] == 3:
-                peso += 1
+                peso += 4
             elif qtd_disc_semestre[i] == 2:
-                peso += 3
+                peso += 6
             elif qtd_disc_semestre[i] == 1:
-                peso += 5
-        #peso += qtd_semestre 
+                peso += len(individuo)//2
+        peso += qtd_semestre 
         return peso, qtd_semestre
     def verificaPreRequisito(individuo, requisitos):
         #quero saber se cada elemento da minha lista de requisitos aparece no individuo, então verifico o código de cada uma das disciplinas do individuo
@@ -248,13 +248,6 @@ class Disciplina:
                 peso_pre_requisito.append(len(populacao[i]))
                 peso_semestre_atual.append(len(populacao[i]))
         normalizado = np.full(len(populacao), -1)
-        qtd_semestre = []
-        '''qtd_soma_disc =[]
-        qtd_semestre_igual = []
-        qtd_semestre_diferente = []
-        
-        for i in range(len(populacao)):
-            qtd_semestre.append()    '''
         for i in range(len(populacao)):
             if(peso_pre_requisito[i] == 0 and peso_semestre_atual[i] == 0):
                 normalizado[i]=0
@@ -307,45 +300,30 @@ def ag(matriz, tam, geracoes, semestre_inicial):
         populacao = pop + nova_populacao
         peso_total, peso_pre_requisito, peso_semestre_atual, peso_semestre_par_impar, normalizado, qtd_semestre = Disciplina.avaliaPopulacao(populacao, semestre_inicial)
         pesos = [a + b + c for a, b, c in zip(peso_total, peso_semestre_par_impar, qtd_semestre)]
-        print("Qtd_semestre", qtd_semestre)
+        '''print("Qtd_semestre", qtd_semestre)
         print("Normalizado: ", normalizado)
         print("pre requisito semestre: ", peso_semestre_atual)
         print("pre requsito: ", peso_pre_requisito)
         print("Peso final ordenado:", pesos)
-        print("\n")
+        print("\n")'''
         pop_ordenada = Disciplina.ordenaPopulacao(populacao, qtd_semestre, pesos, normalizado)
         metade =  len(populacao)//2
         pop = pop_ordenada[:metade]
-        peso_total1, peso_pre_requisito1, peso_semestre_atual1, peso_semestre_par_impar1, normalizado1, qtd_semestre1 = Disciplina.avaliaPopulacao(pop, semestre_inicial)
+        '''peso_total1, peso_pre_requisito1, peso_semestre_atual1, peso_semestre_par_impar1, normalizado1, qtd_semestre1 = Disciplina.avaliaPopulacao(pop, semestre_inicial)
         pesos1 = [a + b + c for a, b, c in zip(peso_total1, peso_semestre_par_impar1, qtd_semestre)]
         print("Qtd_semestre2", qtd_semestre1)
-        print("Normalizado2: ", normalizado1)
-        print("pre requisito semestre2: ", peso_semestre_atual1)
+        print("Normalizado2: ", normalizado1)'''
+        '''print("pre requisito semestre2: ", peso_semestre_atual1)
         print("pre requsito2: ", peso_pre_requisito1)
-        print("Peso final ordenado2:", pesos1)
-        print("\n")
-        c+=1
-    print(c)
-    print("Melhor resultado:", pop[0])
-    print("--------------- Melhores resultados -------------")
-    '''print(pop[0])
-    requisitosemestre = Disciplina.requisitoSemestre(pop[i], Disciplina.parimpar(pop[0]))
-    print("REQUISITOS NO SEMESTRE", requisitosemestre)
-    print(Disciplina.parimpar(pop[0]))
-    print(pop[0])'''
-    '''print(Disciplina.exibeGrupos(pop[1], Disciplina.parimpar(pop[1])))
-    print(Disciplina.exibeGrupos(pop[2], Disciplina.parimpar(pop[2])))'''
-    '''print(Disciplina.exibeGrupos(pop[3], Disciplina.parimpar(pop[3])))
-    print(Disciplina.exibeGrupos(pop[4], Disciplina.parimpar(pop[4])))
-    print(Disciplina.exibeGrupos(pop[5], Disciplina.parimpar(pop[5])))
-    print(Disciplina.exibeGrupos(pop[6], Disciplina.parimpar(pop[6])))
-    print(Disciplina.exibeGrupos(pop[7], Disciplina.parimpar(pop[7])))
-    print(Disciplina.exibeGrupos(pop[8], Disciplina.parimpar(pop[8])))
-    print(Disciplina.exibeGrupos(pop[9], Disciplina.parimpar(pop[9])))
-    print(Disciplina.exibeGrupos(pop[10], Disciplina.parimpar(pop[10])))'''
-    resultados = []
-    for i in range(10):
-        print(i, "-", Disciplina.exibeGrupos(pop[i], Disciplina.parimpar(pop[i])), "\n")
+        print("Peso final ordenado2:", pesos1)'''
+# Mostrar o gráfico
+    peso_total1, peso_pre_requisito1, peso_semestre_atual1, peso_semestre_par_impar1, normalizado1, qtd_semestre1 = Disciplina.avaliaPopulacao(pop, semestre_inicial)
+    #pesos1 = [a + b + c for a, b, c in zip(peso_total1, peso_semestre_par_impar1, qtd_semestre)]
+    print("Qtd_semestre2", qtd_semestre1)
+    print("Normalizado2: ", normalizado1)
+    '''for i in range(len(pop)):
+        if(qtd_semestre1[i]<6):
+            print(i, "-", Disciplina.exibeGrupos(pop[i], Disciplina.parimpar(pop[i])), normalizado1[i], "\n")'''
     return Disciplina.exibeGrupos(pop[0], Disciplina.parimpar(pop[0]))
     
 # maior valor / menor valor
