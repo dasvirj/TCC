@@ -13,7 +13,7 @@ def processar():
     dados_recebidos = request.json
     #matriz, tamanho, geracoes, semestre_inicial
     inicio = time.time()
-    resultado = algoritmo_genetico.ag(dados_recebidos, 100, 10000, 2)
+    resultado = algoritmo_genetico.ag(dados_recebidos, 1000, 50000, 1)
     fim = time.time()
     print("Tempo de execucao:", fim-inicio)
     return jsonify(resultado)
