@@ -2,7 +2,6 @@ import numpy as np
 import random
 import json
 from app import app 
-import matplotlib.pyplot as plt
 #interface do usuário -> Listar todas as disciplinas e selecionar as que já pagou -> csv
 class Disciplina:
     def __init__(self, codigo, nome, semestre, horas, requisito, obrigatoria, pago, peso):
@@ -10,7 +9,6 @@ class Disciplina:
         self.codigo = codigo
         self.semestre = semestre
         self.horas = horas
-#0 para sem pre-requisito, codigo da disciplina que é pre-requisito caso tenha
         self.requisito = requisito
         self.pago = pago
         self.peso = peso
@@ -291,9 +289,11 @@ class Disciplina:
             agrupados3.append(semestre_atual3)
         return agrupados2
 def ag(matriz, tam, geracoes, semestre_inicial):
+    print(semestre_inicial)
+    g = []
     pop = Disciplina.criaPopulacaoInicial(matriz, tam)
     pesos = []
-    c=0
+    c=[]
     semestres = []
     for i in range(geracoes):
         nova_populacao = Disciplina.cruzaIndividuo(matriz, pop)
@@ -321,9 +321,9 @@ def ag(matriz, tam, geracoes, semestre_inicial):
     #pesos1 = [a + b + c for a, b, c in zip(peso_total1, peso_semestre_par_impar1, qtd_semestre)]
     print("Qtd_semestre2", qtd_semestre1)
     print("Normalizado2: ", normalizado1)
-    '''for i in range(len(pop)):
-        if(qtd_semestre1[i]<6):
-            print(i, "-", Disciplina.exibeGrupos(pop[i], Disciplina.parimpar(pop[i])), normalizado1[i], "\n")'''
-    return Disciplina.exibeGrupos(pop[0], Disciplina.parimpar(pop[0]))
+    resultados = []
+    for i in range(10):
+        resultados.append(Disciplina.exibeGrupos(pop[i], Disciplina.parimpar(pop[i])))
+    return resultados
     
 # maior valor / menor valor
