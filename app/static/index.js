@@ -7,7 +7,6 @@
                     const obrigatorias = data.matriz.filter(disciplina => disciplina.obrigatoria == 1);
                     const semestre = {};
                     const form = document.getElementById('disciplinasForm');
-                    const parImpar = document.createElement('label')
                     
                     obrigatorias.forEach(disciplina => {
                         if (!semestre[`semestre${disciplina.semestre}`]) {
@@ -54,7 +53,12 @@
                                 disciplina.pago = 0;
                             }
                         });
-                        const updateJson = { matriz: obrigatorias };
+                        const semestre = document.getElementById('tipo-semestre').value
+
+                        const updateJson = { 
+                            matriz: obrigatorias,
+                            semestre: semestre
+                        };
                         console.log(JSON.stringify(updateJson, null, 2)); // Log para verificar updateJson
                         fetch('/processar', {
                             method: 'POST',
@@ -65,27 +69,34 @@
                         })
                         .then(response => response.json())
                         .then(data => {
-                            const t = 1
                             console.log('Resposta do servidor:', data); // Log para verificar a resposta do servidor
 
                             // Exibir os dados da resposta no HTML
                             const respostaServidor = document.getElementById('respostaServidor');
                             respostaServidor.innerHTML = ''; // Limpa conteúdo anterior
-
-                            const lista = document.createElement('ol');
+                            const principal = document.createElement('div')
                             if (data) { // Verifique se data não é null
                                 data.forEach(grupo => {
-                                    const grupoItem = document.createElement('li');
-                                    const innerList = document.createElement('p');
-                                    grupo.forEach(disciplina => {
-                                        const disciplinaItem = document.createElement('p');
-                                        disciplinaItem.textContent = disciplina;
-                                        innerList.appendChild(disciplinaItem);
+                                const lista = document.createElement('ol');
+                                    grupo.forEach(disciplinas =>{
+                                        const listaDisciplina = document.createElement('li');
+                                        const innerList = document.createElement('ul')
+                                        innerList.className = 'item-semestre'
+                                        disciplinas.forEach( disciplina =>{
+                                            const disciplinaItem = document.createElement('li');
+                                            disciplinaItem.textContent = disciplina;
+                                            innerList.appendChild(disciplinaItem);
+                                            disciplinaItem.className = 'item-semestre-disciplina'
+                                        });
+                                        listaDisciplina.appendChild(innerList);
+                                        lista.appendChild(listaDisciplina);
                                     });
-                                    grupoItem.appendChild(innerList);
-                                    lista.appendChild(grupoItem);
+                                    const content = document.createElement('div')
+                                    content.className = 'container-semestre-item'
+                                    content.appendChild(lista)
+                                    principal.appendChild(content)
                                 });
-                                respostaServidor.appendChild(lista);
+                                respostaServidor.appendChild(principal);
                             } else {
                                 console.error('Dados do servidor são null:', data); // Log de erro se data for null
                             }
@@ -95,3 +106,4 @@
                 })
                 .catch(error => console.error('Erro ao buscar os dados:', error));
         });
+

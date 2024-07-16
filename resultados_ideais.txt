@@ -1,0 +1,127 @@
+BrunoEduardo
+1º Semestre - par
+Estrutura de Dados
+Análise de Sistemas
+Banco de Dados
+Programação Paralela
+
+2º Semestre - impar
+Álgebra Linear
+Eletricidade e Magnetismo
+Estruturas Auto-ajustáveis e Grafos
+Optativa VI
+Optativa VII
+Optativa VIII
+Inteligência Artificial
+
+3º semestre - par
+Computação Gráfica
+Sistemas Distribuídos
+Teoria Geral de Administração e Empreendedorismo
+
+4º Semestre - impar
+Métodos Formais
+Redes de Computadores
+Sistemas Operacionais
+Optativa IX
+Optativa X
+
+5º Semestre - par
+Projeto de Graduação
+Optativa IV
+Optativa V
+
+6º semestre - impar
+Optativa I
+Optativa III
+Optativa III
+Projeto de Trabalho de Conclusão de Curso
+
+7º semestre - par
+Trabalho de Conclusão de Curso
+Optativa XI
+------------------------------------------------------------------------------------------------------------------
+
+1º Semestre - impar
+Álgebra Linear
+Eletricidade e Magnetismo
+Estruturas Auto-ajustáveis e Grafos
+Optativa VI
+Optativa VII
+Optativa VIII
+Inteligência Artificial
+
+2º Semestre - par
+Estrutura de Dados
+Análise de Sistemas
+Banco de Dados
+Programação Paralela
+
+3º Semestre - impar
+Métodos Formais
+Redes de Computadores
+Sistemas Operacionais
+Optativa IX
+Optativa X
+
+4º semestre - par
+Computação Gráfica
+Sistemas Distribuídos
+Teoria Geral de Administração e Empreendedorismo
+
+5º Semestre - impar
+Optativa I
+Optativa III
+Optativa III
+
+6º Semestre - par
+Projeto de Graduação
+Optativa IV
+Optativa V
+
+7º semestre - impar
+Projeto de Trabalho de Conclusão de Curso
+
+8º semestre - par
+Trabalho de Conclusão de Curso
+Optativa XI
+---------------------------------------------------------------------------
+
+ArturMoreira
+1º Semestre - impar
+Álgebra Linear
+Sistemas Digitais
+Inteligência Artificial
+Métodos Formais
+Redes de Computadores
+Sistemas Operacionais
+
+2º Semestre - par
+Banco de Dados
+Cálculo Numérico Computacional
+Programação Paralela
+Sistemas Distribuídos
+
+3º Semestre - impar
+Optativa VI
+Optativa VII
+Optativa VIII
+Optativa IX
+Optativa X
+
+4º Semestre - par
+Computação Gráfica
+Projeto de Graduação
+Optativa IV
+Optativa V
+
+5º Semestre - impar
+Projeto de Trabalho de Conclusão de Curso
+
+6º Semestre - par
+Trabalho de Conclusão de Curso
+Optativa XI
+
+
+-------
+

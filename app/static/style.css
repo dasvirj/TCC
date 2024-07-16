@@ -10,7 +10,7 @@ body{
     background-color: #ffffff;
 }
 main{
-    margin: 6rem
+    margin: 2rem 6rem 2rem 6rem;
 }
 main .content-matriz #disciplinasForm button{
     margin-top: 2rem;
@@ -94,6 +94,23 @@ main .content-matriz #disciplinasForm .item-disciplina:hover{
 .content-resultado{
     margin-top: 4rem;
 }
-.content-resultado ol{
-    
+header{
+    margin: 6rem 6rem 0rem 6rem;
+    display: block;
+}
+header a{
+    text-decoration: none;
+    color: black;
+}
+.item-semestre{
+    border: black 1px;
+    padding: 2px;
+}
+.item-semestre-disciplina{
+    list-style: none;
+}
+.container-semestre-item{
+    border: solid rgb(158, 156, 156);
+    margin: 1rem;
+    padding: 2rem;
 }

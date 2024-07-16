@@ -1,12 +1,14 @@
-{"matriz":[
+[
   {
     "codigo": 1,
     "nome": "Direito e Ética",
     "semestre": 1,
     "horas": 30,
-    "requisito": [0],
+    "requisito": [
+      0
+    ],
     "obrigatoria": 1,
-    "pago": 0,
+    "pago": 1,
     "peso": 0
   },
   {
@@ -14,7 +16,9 @@
     "nome": "Filosofia das Ciências Naturais",
     "semestre": 1,
     "horas": 60,
-    "requisito": [0],
+    "requisito": [
+      0
+    ],
     "obrigatoria": 1,
     "pago": 1,
     "peso": 0
@@ -24,7 +28,9 @@
     "nome": "Introdução à Programação de Computadores",
     "semestre": 1,
     "horas": 90,
-    "requisito":[0],
+    "requisito": [
+      0
+    ],
     "obrigatoria": 1,
     "pago": 1,
     "peso": 0
@@ -34,9 +40,11 @@
     "nome": "Lógica Matemática Aplicada a Computação",
     "semestre": 1,
     "horas": 60,
-    "requisito": [0],
+    "requisito": [
+      0
+    ],
     "obrigatoria": 1,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -44,7 +52,9 @@
     "nome": "Matemática Fundamental",
     "semestre": 1,
     "horas": 90,
-    "requisito": [0],
+    "requisito": [
+      0
+    ],
     "obrigatoria": 1,
     "pago": 1,
     "peso": 0
@@ -54,7 +64,9 @@
     "nome": "Produção Textual",
     "semestre": 1,
     "horas": 30,
-    "requisito": [0],
+    "requisito": [
+      0
+    ],
     "obrigatoria": 1,
     "pago": 1,
     "peso": 0
@@ -64,7 +76,9 @@
     "nome": "Cálculo",
     "semestre": 2,
     "horas": 90,
-    "requisito": [0],
+    "requisito": [
+      0
+    ],
     "obrigatoria": 1,
     "pago": 1,
     "peso": 0
@@ -74,9 +88,11 @@
     "nome": "Circuitos Digitais",
     "semestre": 2,
     "horas": 60,
-    "requisito": [0],
+    "requisito": [
+      0
+    ],
     "obrigatoria": 1,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -84,7 +100,9 @@
     "nome": "Estrutura de Dados",
     "semestre": 2,
     "horas": 60,
-    "requisito": [3],
+    "requisito": [
+      3
+    ],
     "obrigatoria": 1,
     "pago": 1,
     "peso": 0
@@ -94,9 +112,11 @@
     "nome": "Geometria Analítica",
     "semestre": 2,
     "horas": 60,
-    "requisito": [0],
+    "requisito": [
+      0
+    ],
     "obrigatoria": 1,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -104,7 +124,9 @@
     "nome": "Metodologia Para o Trabalho Científico",
     "semestre": 2,
     "horas": 30,
-    "requisito": [0],
+    "requisito": [
+      0
+    ],
     "obrigatoria": 1,
     "pago": 1,
     "peso": 0
@@ -114,9 +136,11 @@
     "nome": "Paradigmas de Programação",
     "semestre": 2,
     "horas": 60,
-    "requisito": [3],
+    "requisito": [
+      3
+    ],
     "obrigatoria": 1,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -124,9 +148,11 @@
     "nome": "Álgebra Linear",
     "semestre": 3,
     "horas": 60,
-    "requisito": [10],
+    "requisito": [
+      10
+    ],
     "obrigatoria": 1,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -134,7 +160,9 @@
     "nome": "Eletricidade e Magnetismo",
     "semestre": 3,
     "horas": 90,
-    "requisito": [0],
+    "requisito": [
+      0
+    ],
     "obrigatoria": 1,
     "pago": 1,
     "peso": 0
@@ -144,7 +172,9 @@
     "nome": "Engenharia de Software",
     "semestre": 3,
     "horas": 60,
-    "requisito": [0],
+    "requisito": [
+      0
+    ],
     "obrigatoria": 1,
     "pago": 1,
     "peso": 0
@@ -154,7 +184,10 @@
     "nome": "Estruturas Auto-ajustáveis e Grafos",
     "semestre": 3,
     "horas": 60,
-    "requisito": [3, 9],
+    "requisito": [
+      3,
+      9
+    ],
     "obrigatoria": 1,
     "pago": 1,
     "peso": 0
@@ -164,9 +197,11 @@
     "nome": "Linguagens Formais e Autômatos",
     "semestre": 3,
     "horas": 60,
-    "requisito": [0],
+    "requisito": [
+      0
+    ],
     "obrigatoria": 1,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -174,7 +209,9 @@
     "nome": "Sistemas Digitais",
     "semestre": 3,
     "horas": 60,
-    "requisito": [0],
+    "requisito": [
+      0
+    ],
     "obrigatoria": 1,
     "pago": 1,
     "peso": 0
@@ -184,9 +221,11 @@
     "nome": "Análise de Sistemas",
     "semestre": 4,
     "horas": 60,
-    "requisito": [15],
+    "requisito": [
+      15
+    ],
     "obrigatoria": 1,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -194,9 +233,11 @@
     "nome": "Arquitetura de Computadores",
     "semestre": 4,
     "horas": 60,
-    "requisito": [8],
+    "requisito": [
+      8
+    ],
     "obrigatoria": 1,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -204,9 +245,11 @@
     "nome": "Banco de Dados",
     "semestre": 4,
     "horas": 60,
-    "requisito": [0],
+    "requisito": [
+      0
+    ],
     "obrigatoria": 1,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -214,9 +257,11 @@
     "nome": "Cálculo Numérico Computacional",
     "semestre": 4,
     "horas": 60,
-    "requisito": [0],
+    "requisito": [
+      0
+    ],
     "obrigatoria": 1,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -224,9 +269,11 @@
     "nome": "Compiladores",
     "semestre": 4,
     "horas": 60,
-    "requisito": [17],
+    "requisito": [
+      17
+    ],
     "obrigatoria": 1,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -234,9 +281,11 @@
     "nome": "Probabilidade e Estatística",
     "semestre": 4,
     "horas": 60,
-    "requisito": [0],
+    "requisito": [
+      0
+    ],
     "obrigatoria": 1,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -244,9 +293,11 @@
     "nome": "Transmissão de Dados",
     "semestre": 4,
     "horas": 60,
-    "requisito": [0],
+    "requisito": [
+      0
+    ],
     "obrigatoria": 1,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -254,9 +305,11 @@
     "nome": "Inteligência Artificial",
     "semestre": 5,
     "horas": 60,
-    "requisito": [0],
+    "requisito": [
+      0
+    ],
     "obrigatoria": 1,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -264,9 +317,11 @@
     "nome": "Métodos Formais",
     "semestre": 5,
     "horas": 60,
-    "requisito": [0],
+    "requisito": [
+      0
+    ],
     "obrigatoria": 1,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -274,9 +329,11 @@
     "nome": "Redes de Computadores",
     "semestre": 5,
     "horas": 60,
-    "requisito": [25],
+    "requisito": [
+      25
+    ],
     "obrigatoria": 1,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -284,39 +341,11 @@
     "nome": "Sistemas Operacionais",
     "semestre": 5,
     "horas": 60,
-    "requisito": [0],
+    "requisito": [
+      0
+    ],
     "obrigatoria": 1,
-    "pago": 1,
-    "peso": 0
-  },
-  {
-    "codigo": 30,
-    "nome": "Optativa I",
-    "semestre": 0,
-    "horas": 60,
-    "requisito": [0],
-    "obrigatoria": 0,
-    "pago": 1,
-    "peso": 0
-  },
-  {
-    "codigo": 31,
-    "nome": "Optativa II",
-    "semestre": 0,
-    "horas": 60,
-    "requisito": [0],
-    "obrigatoria": 0,
-    "pago": 1,
-    "peso": 0
-  },
-  {
-    "codigo": 32,
-    "nome": "Optativa III",
-    "semestre": 0,
-    "horas": 60,
-    "requisito": [0],
-    "obrigatoria": 0,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -324,7 +353,10 @@
     "nome": "Computação Gráfica",
     "semestre": 6,
     "horas": 60,
-    "requisito": [10, 13],
+    "requisito": [
+      10,
+      13
+    ],
     "obrigatoria": 1,
     "pago": 0,
     "peso": 0
@@ -334,9 +366,11 @@
     "nome": "Programação Paralela",
     "semestre": 6,
     "horas": 60,
-    "requisito": [0],
+    "requisito": [
+      0
+    ],
     "obrigatoria": 1,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -344,7 +378,42 @@
     "nome": "Projeto de Graduação",
     "semestre": 6,
     "horas": 60,
-    "requisito": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29],
+    "requisito": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34
+    ],
     "obrigatoria": 1,
     "pago": 0,
     "peso": 0
@@ -354,9 +423,11 @@
     "nome": "Sistemas Distribuídos",
     "semestre": 6,
     "horas": 60,
-    "requisito": [0],
+    "requisito": [
+      0
+    ],
     "obrigatoria": 1,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -364,29 +435,11 @@
     "nome": "Teoria Geral de Administração e Empreendedorismo",
     "semestre": 6,
     "horas": 60,
-    "requisito": [0],
+    "requisito": [
+      0
+    ],
     "obrigatoria": 1,
-    "pago": 1,
-    "peso": 0
-  },
-  {
-    "codigo": 38,
-    "nome": "Optativa IV",
-    "semestre": 0,
-    "horas": 60,
-    "requisito": [0],
-    "obrigatoria": 0,
-    "pago": 1,
-    "peso": 0
-  },
-  {
-    "codigo": 39,
-    "nome": "Optativa V",
-    "semestre": 0,
-    "horas": 60,
-    "requisito": [0],
-    "obrigatoria": 0,
-    "pago": 1,
+    "pago": 0,
     "peso": 0
   },
   {
@@ -394,58 +447,43 @@
     "nome": "Projeto de Trabalho de Conclusão de Curso",
     "semestre": 7,
     "horas": 60,
-    "requisito": [1, 2, 3, 4, 5, 6, 7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,33,34,35,36,37],
+    "requisito": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      33,
+      34,
+      35,
+      36,
+      37
+    ],
     "obrigatoria": 1,
-    "pago": 0,
-    "peso": 0
-  },
-  {
-    "codigo": 41,
-    "nome": "Optativa VI",
-    "semestre": 0,
-    "horas": 60,
-    "requisito": [0],
-    "obrigatoria": 0,
-    "pago": 0,
-    "peso": 0
-  },
-  {
-    "codigo": 42,
-    "nome": "Optativa VII",
-    "semestre": 0,
-    "horas": 60,
-    "requisito": [0],
-    "obrigatoria": 0,
-    "pago": 0,
-    "peso": 0
-  },
-  {
-    "codigo": 43,
-    "nome": "Optativa VIII",
-    "semestre": 0,
-    "horas": 60,
-    "requisito": [0],
-    "obrigatoria": 0,
-    "pago": 0,
-    "peso": 0
-  },
-  {
-    "codigo": 44,
-    "nome": "Optativa IX",
-    "semestre": 0,
-    "horas": 60,
-    "requisito": [0],
-    "obrigatoria": 0,
-    "pago": 0,
-    "peso": 0
-  },
-  {
-    "codigo": 45,
-    "nome": "Optativa X",
-    "semestre": 0,
-    "horas": 60,
-    "requisito": [0],
-    "obrigatoria": 0,
     "pago": 0,
     "peso": 0
   },
@@ -454,9 +492,45 @@
     "nome": "Trabalho de Conclusão de Curso",
     "semestre": 8,
     "horas": 60,
-    "requisito": [1, 2, 3, 4, 5, 6, 7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,33,34,35,36,37,40],
+    "requisito": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      33,
+      34,
+      35,
+      36,
+      37,
+      40
+    ],
     "obrigatoria": 1,
     "pago": 0,
     "peso": 0
   }
-]}
+]
